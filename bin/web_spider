@@ -3,4 +3,4 @@ $LOAD_PATH << 'lib'
 
 require "web_spider"
 
-WebSpider::Spider.run ARGV
+WebSpider::Spider.run ARGV[0]
