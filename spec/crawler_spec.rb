@@ -1,19 +1,15 @@
 require "spec_helper"
 
+require "web_spider/crawler"
+require "web_spider/error"
+require "web_spider/options"
+require "web_spider/history"
+
 RSpec.describe WebSpider::Crawler do
   context "Initialize" do
-    it "should not initialize with an invalid argument" do
-      expect { WebSpider::Crawler.new("") }.to raise_exception(WebSpider::InvalidArgument)
+    it "should initialize with valid argument" do
+      options = {:url => "sample.com", :host => "sample.com"}
+      expect { WebSpider::Crawler.new(options).run }.to raise_exception(WebSpider::InvalidURL)
     end
-
-    it "should not initialize with an invalid url" do
-      expect { WebSpider::Crawler.new("sample") }.to raise_exception(WebSpider::InvalidUrl)
-    end
-
-    it "should initialize with a valid url" do
-      expect(WebSpider::Crawler.new("http://sample.com").valid_url? ).to be true
-    end
-
   end
-
 end

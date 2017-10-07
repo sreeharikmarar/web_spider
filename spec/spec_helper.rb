@@ -1,8 +1,8 @@
 require "bundler/setup"
-require "web_spider"
+require "web_spider/crawler"
+require "web_spider/error"
 
 RSpec.configure do |config|
-  # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
   config.expect_with :rspec do |c|

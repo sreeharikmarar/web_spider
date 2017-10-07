@@ -1,13 +1,10 @@
 require "spec_helper"
+require "web_spider/spider"
 
-RSpec.describe WebSpider do
+RSpec.describe WebSpider::Spider do
   context "Initialize" do
-    it "should not initialize without proper argument" do
-      expect { WebSpider::Spider.run }.to raise_exception(WebSpider::InvalidArgument)
-    end
-
-    it "should not start if url is invalid" do
-      expect { WebSpider::Spider.run("test") }.to raise_exception(WebSpider::InvalidUrl)
+    it "should not start without proper argument" do
+      expect { WebSpider::Spider.run }.to raise_error(SystemExit)
     end
   end
 end
