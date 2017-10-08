@@ -22,27 +22,37 @@ module WebSpider
 
       raise InvalidURL.new("Invalid URL") unless url.is_valid?
 
-      @queue.enqueue(url.name) if url.is_valid?
+      @queue.enqueue(url.name)
 
       until @queue.empty?
         url = @queue.dequeue
-        page = get_page(url)
-        next if @history.include?(page.url)
-        @history.add(page.url)
+        next if @history.include?(url)
+        response = Server.get_response(url)
+        page = get_page(url,response)
         page.visit
+        @history.add(url)
         crawl_page(page) if page.can_crawl?
       end
     end
 
-    def get_page(url)
-      Page.new(url)
+    def host
+      @options[:host]
+    end
+
+    def get_page(url,response)
+      host != nil ? Page.new(url,response,host) : Page.new(url,response)
     end
 
     def crawl_page(page)
       page.doc.search('//a[@href]').each do |doc|
         url = URL.new(doc["href"]) if doc["href"] != nil
+        next if not_allowed?(url)
         @queue.enqueue(url.name) if url.is_valid?
       end
+    end
+
+    def not_allowed?(url)
+      url.is_valid? && host != nil && host != url.host
     end
 
     def initialize_url(url)

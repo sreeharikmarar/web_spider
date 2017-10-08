@@ -1,8 +1,6 @@
 # WebSpider
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/web_spider`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A very basic ruby gem to crawl web sites and create a sitemap file with the visited links details.
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+	$ web_spider --url "http://somesite.com" --host "somesite.com"
 
 ## Development
 

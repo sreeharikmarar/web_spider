@@ -16,6 +16,10 @@ module WebSpider
           options[:url] = url
         end
 
+        opts.on("-o", "--host HOST", "Host name to limit crawling inside same, eg: google.com") do |host|
+          options[:host] = host
+        end
+
         opts.on("-h", "--help", "Prints help") do
           puts opts
           exit
