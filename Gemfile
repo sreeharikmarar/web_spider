@@ -6,3 +6,4 @@ gemspec
 gem "robots"
 gem "nokogiri"
 gem "pry"
+gem "builder"
