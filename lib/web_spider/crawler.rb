@@ -13,9 +13,9 @@ module WebSpider
       @sitemap = Sitemap.new(@options[:sitemap])
     end
 
-    def is_allowed?
+    def is_allowed?(url)
       robot = Robots.new("web spider User Agent")
-      robot.allowed?(@url)
+      robot.allowed?(url)
     end
 
     def run
@@ -48,16 +48,27 @@ module WebSpider
     end
 
     def crawl_page(page)
+      search_images(page)
       update_sitemap(page.url)
+      search_urls(page)
+    end
+
+    def search_images(page)
+      page.doc.search('//img[@src]').each do |img|
+        @sitemap.add_images(img["src"]) if img["src"] != nil
+      end
+    end
+
+    def search_urls(page)
       page.doc.search('//a[@href]').each do |doc|
         url = URL.new(doc["href"]) if doc["href"] != nil
-        next if not_allowed?(url)
+        next if not_allowed?(url) 
         @queue.enqueue(url.name) if url.is_valid?
       end
     end
 
     def update_sitemap(url)
-      @sitemap.add_html(url)
+      @sitemap.update_sitemap(url)
     end
 
     def not_allowed?(url)
