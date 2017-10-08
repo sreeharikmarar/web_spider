@@ -1,32 +1,38 @@
 # WebSpider
 
-A very basic ruby gem to crawl web sites and create a sitemap file with the visited links details.
+A basic ruby gem to crawl websites and create a sitemap file with the visited links details.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+After checking out this repo `https://github.com/sreeharikmarar/web_spider`
 
-```ruby
-gem 'web_spider'
-```
+Execute below command to install dependencies
 
-And then execute:
+	$ bin/setup
 
-    $ bundle
+And then execute below command to run tests
 
-Or install it yourself as:
+	$ rake spec 
 
-    $ gem install web_spider
+And run the below command to install this gem onto your local machine
+    
+	$ bundle exec rake install
 
 ## Usage
 
-	$ web_spider --url "http://somesite.com" --host "somesite.com"
+	$ web_spider --url "http://somesite.com" --host "somesite.com" --sitemap "sitemap.xml"
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Toto
+
+- Add support for crawling using Proxy server
+- Add support for multiple content types
+- Add support for Cookie/Session
 
 ## Contributing
 
