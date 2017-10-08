@@ -4,12 +4,13 @@ require 'optionparser'
 
 module WebSpider
   class Crawler
-    attr_accessor :queue, :history, :options
+    attr_accessor :queue, :history, :options, :sitemap
 
     def initialize(options)
       @options = options
       @queue = Queue.new
       @history = History.new
+      @sitemap = Sitemap.new(@options[:sitemap])
     end
 
     def is_allowed?
@@ -19,14 +20,17 @@ module WebSpider
 
     def run
       url = URL.new(@options[:url])
-
-      raise InvalidURL.new("Invalid URL") unless url.is_valid?
+      raise InvalidURL.new("given URL '#{url.name}'' is invalid") unless url.is_valid?
 
       @queue.enqueue(url.name)
+      start_crawling
+    end
 
+    def start_crawling
       until @queue.empty?
         url = @queue.dequeue
         next if @history.include?(url)
+        puts "Crawling URL : #{url}"
         response = Server.get_response(url)
         page = get_page(url,response)
         page.visit
@@ -35,15 +39,16 @@ module WebSpider
       end
     end
 
-    def host
-      @options[:host]
+    def domain
+      @options[:domain]
     end
 
     def get_page(url,response)
-      host != nil ? Page.new(url,response,host) : Page.new(url,response)
+      domain != nil ? Page.new(url,response,domain) : Page.new(url,response)
     end
 
     def crawl_page(page)
+      update_sitemap(page.url)
       page.doc.search('//a[@href]').each do |doc|
         url = URL.new(doc["href"]) if doc["href"] != nil
         next if not_allowed?(url)
@@ -51,15 +56,12 @@ module WebSpider
       end
     end
 
-    def not_allowed?(url)
-      url.is_valid? && host != nil && host != url.host
+    def update_sitemap(url)
+      @sitemap.add_html(url)
     end
 
-    def initialize_url(url)
-      raise WebSpider::InvalidArgument.new("Provide valid url") unless url
-      url = URL.new(url)
-      raise WebSpider::InvalidUrl.new("provide a valid url") unless url.is_valid?
-      url
+    def not_allowed?(url)
+      url.is_valid? && domain != nil && domain != url.host
     end
   end
 end

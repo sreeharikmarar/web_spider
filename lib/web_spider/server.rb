@@ -8,11 +8,11 @@ module WebSpider
           when Net::HTTPSuccess     then result
           when Net::HTTPRedirection then get_response(result['location'], limit - 1)
           else
-            result.error!
+            nil
           end
         rescue Exception => e
           puts e.message
-          return false
+          return nil
         end
       end
     end

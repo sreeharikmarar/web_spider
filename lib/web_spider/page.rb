@@ -15,21 +15,25 @@ module WebSpider
     end
 
     def visit
-      puts "Crawling URL : #{@url}"
       parse_document
     end
 
     def parse_document
-      @body = @response.body
-      if is_html?
-        @doc = Nokogiri::HTML::Document.parse(@body)
-      else
-        @doc = nil
+      begin
+        return unless success_response
+        @body = @response.body
+        @doc = is_html? ?  Nokogiri::HTML::Document.parse(@body) : nil
+      rescue Exception => e
+        raise ParserException.new("parser exception : #{e.message}")
       end
     end
 
     def can_crawl?
       @doc != nil
+    end
+
+    def success_response
+      @response && @response.msg == "OK" && @response.body != nil
     end
 
     def should_skip(host)

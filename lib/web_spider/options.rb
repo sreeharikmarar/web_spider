@@ -16,8 +16,12 @@ module WebSpider
           options[:url] = url
         end
 
-        opts.on("-o", "--host HOST", "Host name to limit crawling inside same, eg: google.com") do |host|
-          options[:host] = host
+        opts.on("-d", "--domain DOMAIN", "Domain name to limit crawling within a specific domain, eg: google.com") do |domain|
+          options[:domain] = domain
+        end
+
+        opts.on("-s", "--sitemap SITEMAP FILE", "Sitemap file path to save details, eg: /tmp/sitemap.xml") do |sitemap|
+          options[:sitemap] = sitemap
         end
 
         opts.on("-h", "--help", "Prints help") do
@@ -28,7 +32,7 @@ module WebSpider
 
       begin
         opt_parser.parse!
-        mandatory = [:url]
+        mandatory = [:url, :domain, :sitemap]
         missing = mandatory.select{ |param| options[param].nil? }
         raise OptionParser::MissingArgument, missing.join(', ') unless missing.empty?
       rescue OptionParser::ParseError,OptionParser::MissingArgument => e
