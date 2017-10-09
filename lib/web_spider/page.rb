@@ -55,5 +55,9 @@ module WebSpider
         value == type
       end
     end
+
+    def search(query)
+      @doc.search(query)
+    end
   end
 end

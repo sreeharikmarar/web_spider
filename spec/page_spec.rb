@@ -38,7 +38,7 @@ RSpec.describe WebSpider::Crawler do
   context "Parse Response with html content" do
     let(:url) { 'http://abc.com' }
     let(:host) { 'abc.com' }
-    let(:body) { "<html><a hred='http://abs.com/about'></a></html>" }
+    let(:body) { "<html><a href='http://abs.com/about'></a><img src='http://cdn.abc.com/assets/sprite.jpg'></html>" }
 
     let(:response) do
       Net::HTTPResponse.new('1.1', "200", "OK").tap do |response|
@@ -51,7 +51,17 @@ RSpec.describe WebSpider::Crawler do
 
     it "should return href elemeents while parsing" do
       page.visit
-      expect(page.body).to eq("<html><a hred='http://abs.com/about'></a></html>")
+      expect(page.body).to eq("<html><a href='http://abs.com/about'></a><img src='http://cdn.abc.com/assets/sprite.jpg'></html>")
+    end
+
+    it "should return href element while parsing" do
+      page.visit
+      expect(page.search("//a[@href]").first[:href]).to eq("http://abs.com/about")
+    end
+
+    it "should return image src element while parsing" do
+      page.visit
+      expect(page.search("//img[@src]").first[:src]).to eq("http://cdn.abc.com/assets/sprite.jpg")
     end
   end
 end

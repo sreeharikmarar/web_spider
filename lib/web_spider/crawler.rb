@@ -59,13 +59,13 @@ module WebSpider
     end
 
     def search_images(page)
-      page.doc.search('//img[@src]').each do |img|
+      page.search('//img[@src]').each do |img|
         @sitemap.add_images(img["src"]) if img["src"] != nil
       end
     end
 
     def search_urls(page)
-      page.doc.search('//a[@href]').each do |doc|
+      page.search('//a[@href]').each do |doc|
         url = URL.new(doc["href"]) if doc["href"] != nil
         next if not_allowed?(url)
         @queue.enqueue(url.name) if url.is_valid?
