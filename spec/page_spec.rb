@@ -49,17 +49,17 @@ RSpec.describe WebSpider::Crawler do
 
     let (:page) { WebSpider::Page.new(url, response, host) }
 
-    it "should return href elemeents while parsing" do
+    it "body should return page elements while parsing" do
       page.visit
       expect(page.body).to eq("<html><a href='http://abs.com/about'></a><img src='http://cdn.abc.com/assets/sprite.jpg'></html>")
     end
 
-    it "should return href element while parsing" do
+    it "search should return href element while parsing" do
       page.visit
       expect(page.search("//a[@href]").first[:href]).to eq("http://abs.com/about")
     end
 
-    it "should return image src element while parsing" do
+    it "search should return image src element while parsing" do
       page.visit
       expect(page.search("//img[@src]").first[:src]).to eq("http://cdn.abc.com/assets/sprite.jpg")
     end
