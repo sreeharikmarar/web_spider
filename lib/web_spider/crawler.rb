@@ -23,7 +23,12 @@ module WebSpider
       raise InvalidURL.new("given URL '#{url.name}'' is invalid") unless url.is_valid?
 
       @queue.enqueue(url.name)
-      start_crawling
+
+      begin
+        start_crawling
+      rescue ParserException => e
+        puts e.message
+      end
     end
 
     def start_crawling
@@ -62,7 +67,7 @@ module WebSpider
     def search_urls(page)
       page.doc.search('//a[@href]').each do |doc|
         url = URL.new(doc["href"]) if doc["href"] != nil
-        next if not_allowed?(url) 
+        next if not_allowed?(url)
         @queue.enqueue(url.name) if url.is_valid?
       end
     end

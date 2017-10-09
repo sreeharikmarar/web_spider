@@ -15,17 +15,17 @@ module WebSpider
     end
 
     def visit
-      parse_document
+      begin
+        parse_document
+      rescue Exception => e
+        raise ParserException.new("ParserException : #{e.message}")
+      end
     end
 
     def parse_document
-      begin
-        return unless success_response
-        @body = @response.body == nil && @response.body.empty? ? nil : @response.body
-        @doc = is_html? ?  Nokogiri::HTML::Document.parse(@body) : nil
-      rescue Exception => e
-        raise ParserException.new("parser exception : #{e.message}")
-      end
+      return unless success_response
+      @body = @response.body == nil && @response.body.empty? ? nil : @response.body
+      @doc = is_html? ?  Nokogiri::HTML::Document.parse(@body) : nil
     end
 
     def can_crawl?

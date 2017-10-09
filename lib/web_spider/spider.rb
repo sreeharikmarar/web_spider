@@ -9,8 +9,6 @@ module WebSpider
         exit
       rescue InvalidURL => e
         puts ">>Invalid URL Exception: #{e.message}"
-      rescue ParserException => e
-        puts ">>Parser Exception: #{e.message}" 
       rescue Exception => e
         puts ">>Exception: #{e.message}"
       end

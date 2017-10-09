@@ -32,7 +32,7 @@ module WebSpider
 
       begin
         opt_parser.parse!
-        mandatory = [:url, :sitemap]
+        mandatory = [:url, :domain, :sitemap]
         missing = mandatory.select{ |param| options[param].nil? }
         raise OptionParser::MissingArgument, missing.join(', ') unless missing.empty?
       rescue OptionParser::ParseError,OptionParser::MissingArgument => e
