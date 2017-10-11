@@ -20,7 +20,7 @@ And run the below command to install this gem onto your local machine
 
 ## Usage
 
-	$ web_spider --url "http://somesite.com" --host "somesite.com" --sitemap "sitemap.xml"
+	$ web_spider --url "http://somesite.com" --domain "somesite.com" --sitemap "sitemap.xml"
 
 ## Development
 
@@ -30,8 +30,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Todo
 
-- Add support for crawling using Proxy server
-- Add support for multiple content types
+- Add support for Cuncurrency
+- Add support for Proxy server
 - Add support for Cookie/Session
 
 ## Contributing
