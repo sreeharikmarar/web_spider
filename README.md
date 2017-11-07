@@ -31,7 +31,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Todo
 
 - Add support for Cuncurrency
-- Add support for Proxy server
+- Add support for Proxy 
 - Add support for Cookie/Session
 
 ## Contributing
