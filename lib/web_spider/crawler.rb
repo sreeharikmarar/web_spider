@@ -1,5 +1,4 @@
 require 'robots'
-require 'pry'
 require 'optionparser'
 
 module WebSpider

@@ -1,7 +1,6 @@
 require "nokogiri"
 require "net/http"
 require "open-uri"
-require "pry"
 
 module WebSpider
   class Page
